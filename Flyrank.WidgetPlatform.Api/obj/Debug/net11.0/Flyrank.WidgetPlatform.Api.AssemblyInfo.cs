@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Flyrank.WidgetPlatform.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+74f793f805fc33ed6267a6b6182bd42bba31dc3d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Flyrank.WidgetPlatform.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Flyrank.WidgetPlatform.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

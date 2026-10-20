@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flyrank Lead Capture Test</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: system-ui, sans-serif;
+      color: #172033;
+      background: #f3f6fb;
+    }
+
+    body {
+      max-width: 680px;
+      margin: 3rem auto;
+      padding: 0 1rem;
+    }
+
+    main {
+      padding: 2rem;
+      border: 1px solid #dce3ee;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 8px 28px rgb(23 32 51 / 8%);
+    }
+
+    h1 {
+      margin-top: 0;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.4rem;
+      margin: 1rem 0;
+    }
+
+    input,
+    textarea,
+    button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #bac5d6;
+      border-radius: 6px;
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      background: #175cd3;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    #status {
+      min-height: 1.5rem;
+      overflow-wrap: anywhere;
+    }
+
+    .hint {
+      color: #526078;
+      font-size: 0.9rem;
+    }
+
+    .honeypot {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Lead Capture Test</h1>
+    <p class="hint">
+      This page runs on a separate origin and sends a lead directly to the local API.
+    </p>
+
+    <form id="lead-form">
+      <div class="field">
+        <label for="widget-id">Widget ID</label>
+        <input id="widget-id" name="widgetId" type="text" required
+               placeholder="Enter the ID of a widget created through the API">
+      </div>
+
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" required maxlength="100" autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required maxlength="254" autocomplete="email">
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" maxlength="40" autocomplete="tel">
+      </div>
+
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" maxlength="2000"></textarea>
+      </div>
+
+      <div class="honeypot" aria-hidden="true">
+        <label for="website">Leave this field empty</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <button id="submit-button" type="submit">Submit lead</button>
+      <p id="status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <script>
+    const apiUrl = "http://localhost:5273/api/submissions";
+    const form = document.querySelector("#lead-form");
+    const button = document.querySelector("#submit-button");
+    const status = document.querySelector("#status");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      status.textContent = "";
+      button.disabled = true;
+
+      const formData = new FormData(form);
+      const payload = {
+        widgetId: formData.get("widgetId").trim(),
+        visitorData: {
+          name: formData.get("name").trim(),
+          email: formData.get("email").trim(),
+          phone: formData.get("phone").trim(),
+          message: formData.get("message").trim()
+        },
+        website: formData.get("website").trim()
+      };
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const responseText = await response.text();
+          status.textContent = `API error (${response.status}): ${responseText}`;
+          return;
+        }
+
+        const result = await response.json();
+        status.textContent = result.accepted
+          ? `Submission accepted. Submission ID: ${result.submissionId}`
+          : "The API did not accept the submission.";
+        form.reset();
+      } catch (error) {
+        status.textContent = "The request failed. Check that the API is running and this origin is allowed by the CORS configuration.";
+        console.error("The submission request failed:", error);
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

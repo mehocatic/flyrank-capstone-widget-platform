@@ -44,3 +44,4 @@ C:\Users\Administrator\Desktop\flyrank-capstone-widget-platform\Flyrank.WidgetPl
 C:\Users\Administrator\Desktop\flyrank-capstone-widget-platform\Flyrank.WidgetPlatform.Api\obj\Debug\net11.0\Flyrank.WidgetPlatform.Api.pdb
 C:\Users\Administrator\Desktop\flyrank-capstone-widget-platform\Flyrank.WidgetPlatform.Api\obj\Debug\net11.0\Flyrank.WidgetPlatform.Api.genruntimeconfig.cache
 C:\Users\Administrator\Desktop\flyrank-capstone-widget-platform\Flyrank.WidgetPlatform.Api\obj\Debug\net11.0\ref\Flyrank.WidgetPlatform.Api.dll
+C:\Users\Administrator\Desktop\flyrank-capstone-widget-platform\Flyrank.WidgetPlatform.Api\obj\Debug\net11.0\Flyrank.WidgetPlatform.Api.sourcelink.json
