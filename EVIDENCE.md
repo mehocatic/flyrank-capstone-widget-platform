@@ -1,6 +1,6 @@
 # Section 6 Evidence Map
 
-This document maps the Section 6 behaviors requested for this capstone to the implementation and gives repeatable local checks. The repository currently has no automated test project. The procedures below are verification steps, not claims that a test run or external service check has already passed.
+This document maps the Section 6 behaviors requested for this capstone to the implementation and gives repeatable local checks. The repository currently has no automated test project. Captured screenshots below provide evidence of the Swagger endpoints, widget creation, and a successful cross-origin submission. The procedures below remain available for repeatable local checks.
 
 Run the API using the `http` profile and create a widget before running submission checks. See [README.md](./README.md) for the API and second-origin test-site commands.
 
@@ -87,9 +87,35 @@ $body = @{
 
 If a reverse proxy is used, the IP observed by the application can differ from the visitor IP. The current rate limiter partitions on the connection's remote IP and does not enable forwarded-header processing in `Program.cs`.
 
+## Captured screenshots
+
+### Swagger API endpoints
+
+![Swagger UI showing the dashboard, submissions, and widgets API endpoints](./swagger1.png)
+
+The Swagger UI loaded the API definition and displays the dashboard, submissions, and widget endpoints, including `POST /api/submissions`.
+
+### Widget creation
+
+![Swagger UI showing a successful widget creation response](./swagger3.png)
+
+The widget creation request completed successfully with HTTP `201 Created`, confirming that the platform can create and return widget data.
+
+### Successful lead capture and CORS validation
+
+![Lead capture form with an accepted submission and CORS response headers](./swagger2.png)
+
+The browser submitted a lead from origin `http://127.0.0.1:5500` to `POST /api/submissions`. The API returned HTTP `202 Accepted` and `Access-Control-Allow-Origin: http://127.0.0.1:5500`, confirming both successful lead capture and CORS permission for the Live Server origin.
+
+### Lead capture request payload
+
+![Lead capture request payload shown in the browser network panel](./swagger4.png)
+
+The network panel shows the submitted visitor data and widget ID for the lead capture flow. Together with the accepted response and CORS header shown above, this confirms the widget platform submission path worked end to end.
+
 ## Limitations
 
-- The evidence above describes the code and local manual checks. No CI run or external geo provider result is asserted here.
+- The screenshots show local manual checks. No CI run or external geo provider result is asserted here.
 - The API stores widgets and submissions in process memory. Restarting the process removes them.
 - Tenant scoping is not authentication. Management and dashboard endpoints need authenticated tenant identity before production use.
 - Geo lookup depends on an externally configured provider and a public client IP; local loopback submissions intentionally do not perform the external lookup.
