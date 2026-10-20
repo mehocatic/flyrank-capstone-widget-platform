@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "pFQm4iQHALY=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Administrator\\Desktop\\flyrank-capstone-widget-platform\\Flyrank.WidgetPlatform.Api\\Flyrank.WidgetPlatform.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.aspnetcore.openapi\\11.0.0-rc.2.26504.105\\microsoft.aspnetcore.openapi.11.0.0-rc.2.26504.105.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.openapi\\3.10.2\\microsoft.openapi.3.10.2.nupkg.sha512"
+  ],
+  "logs": []
+}

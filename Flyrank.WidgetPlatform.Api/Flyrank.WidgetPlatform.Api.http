@@ -1,0 +1,77 @@
+@Flyrank.WidgetPlatform.Api_HostAddress = http://localhost:5159
+@tenantId = 4ecae584-6772-44ad-a676-b83825f2131e
+@widgetId = 2e01aef3-8242-444a-84f9-42f101166b24
+
+### Create a widget
+POST {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/widgets
+Content-Type: application/json
+
+{
+  "tenantId": "{{tenantId}}",
+  "name": "Contact lead form",
+  "type": "lead-form",
+  "title": "Talk to our team",
+  "buttonText": "Send"
+}
+
+### List widgets for a tenant
+GET {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/widgets?tenantId={{tenantId}}
+Accept: application/json
+
+### Get a widget
+GET {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/widgets/{{widgetId}}?tenantId={{tenantId}}
+Accept: application/json
+
+### Get a missing widget
+GET {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/widgets/11111111-1111-1111-1111-111111111111?tenantId={{tenantId}}
+Accept: application/json
+
+### Update a widget
+PUT {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/widgets/{{widgetId}}
+Content-Type: application/json
+
+{
+  "tenantId": "{{tenantId}}",
+  "name": "Contact lead form",
+  "type": "lead-form",
+  "title": "Contact our team",
+  "buttonText": "Submit"
+}
+
+### Get public widget configuration
+GET {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/widgets/{{widgetId}}/configuration
+Accept: application/json
+
+### Get widget embed snippet
+GET {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/widgets/{{widgetId}}/embed
+Accept: application/json
+
+### Load the widget's JavaScript
+GET {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/widgets/{{widgetId}}/loader.js
+Accept: application/javascript
+
+### Submit a lead (set an allowed Origin to test CORS)
+POST {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/submissions
+Origin: http://localhost:3000
+Content-Type: application/json
+
+{
+  "widgetId": "{{widgetId}}",
+  "visitorData": {
+    "email": "visitor@example.com"
+  },
+  "website": ""
+}
+
+### Get the dashboard for a widget
+GET {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/dashboard/widgets/{{widgetId}}?tenantId={{tenantId}}
+Accept: application/json
+
+### Delete a widget
+DELETE {{Flyrank.WidgetPlatform.Api_HostAddress}}/api/widgets/{{widgetId}}?tenantId={{tenantId}}
+
+###
+GET {{Flyrank.WidgetPlatform.Api_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
